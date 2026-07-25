@@ -10,9 +10,14 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 logging.basicConfig(level=logging.INFO)
 
-BOT_TOKEN = '8807328308:AAGvBjk_tnBXlKdsjA2-C6nItcyLVrrvN50'
-DEVELOPER_ID = 8257098912
-DB_PATH = 'bot_database.db'
+# Read sensitive values from environment variables
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
+if not BOT_TOKEN:
+    logging.error("BOT_TOKEN environment variable is not set. Exiting.")
+    raise SystemExit("BOT_TOKEN environment variable is required")
+
+DEVELOPER_ID = int(os.environ.get("DEVELOPER_ID", "8257098912"))
+DB_PATH = os.environ.get("DB_PATH", "bot_database.db")
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
